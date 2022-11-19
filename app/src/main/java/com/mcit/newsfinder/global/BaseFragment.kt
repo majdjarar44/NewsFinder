@@ -25,24 +25,7 @@ abstract class BaseFragment : Fragment(){
     ): View? {
         return layoutResource(inflater, container)
     }
-    fun setLocale(localeName: String) {
-        val locale = Locale(localeName)
-        Locale.setDefault(locale)
-        val res = resources
-        val dm = res.displayMetrics
-        val conf = res.configuration
-        conf.locale = locale
-        res.updateConfiguration(conf, dm)
-    }
 
-
-    fun showSuccessMessage(titleMessage: Int, message: Int) {
-        AlertUtil.showSuccess(
-            requireActivity(),
-            titleMessage,
-            message
-        )
-    }
 
     fun showFailedMessage(message: String) {
         AlertUtil.showError(
@@ -51,20 +34,5 @@ abstract class BaseFragment : Fragment(){
             message
         )
     }
-
-
-
-    fun showProgress() {
-        activity?.let {
-            LoaderDialog.getInstance(it).showProgress()
-        }
-    }
-
-    fun hideProgress() {
-        activity?.let {
-            LoaderDialog.getInstance(it).hideProgress()
-        }
-    }
-
 
 }

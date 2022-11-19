@@ -10,11 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mcit.news.MainNewsViewModel
+
 import com.mcit.newsfinder.R
 import com.mcit.newsfinder.data.model.MixedNewsDataModel
 import com.mcit.newsfinder.databinding.FragmentMainNewsBinding
 import com.mcit.newsfinder.global.BaseFragment
+import com.mcit.newsfinder.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.collections.ArrayList
 
@@ -27,6 +28,7 @@ class MainNewsFragment : BaseFragment() {
     private var isLoading: Boolean = false
     private var handler: Handler = Handler()
     private var newsDataList = mutableListOf<MixedNewsDataModel>()
+
     override fun layoutResource(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentMainNewsBinding.inflate(inflater, container, false)
         return binding.root
@@ -116,13 +118,11 @@ class MainNewsFragment : BaseFragment() {
 
     private fun observeNewNews() {
         viewModel.mixedNewsDataModel.observe(viewLifecycleOwner, Observer {
-//            val shuffledData = it.shuffled()
             newsDataList = it
             setArticlesInAdapter()
             binding.progressParLoading.visibility = View.GONE
         })
     }
-
 
     private fun setArticlesInAdapter() {
         binding.recMainNews.visibility = View.VISIBLE
@@ -135,13 +135,11 @@ class MainNewsFragment : BaseFragment() {
     private fun swipeRefreshLayout() {
         binding?.srRefreshLayout?.setOnRefreshListener {
             binding?.srRefreshLayout?.isRefreshing = false
-            viewModel.getMainNews(viewModel.getCurrentDay())
+            viewModel.getMainNews(Utils.getCurrentDay())
         }
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         return when (item.itemId) {
             R.id.action_country -> {
                 showAlertDialog(
@@ -155,7 +153,6 @@ class MainNewsFragment : BaseFragment() {
             }
             R.id.action_category -> {
                 showAlertDialog(arrayListOf("sports", "business", "health"), false)
-
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -165,7 +162,7 @@ class MainNewsFragment : BaseFragment() {
     private fun showAlertDialog(arrayList: ArrayList<String>, isFilterByCountry: Boolean) {
         val dialogBuilder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog)
         val inflater = this.layoutInflater
-        val dialogView = inflater.inflate(R.layout.item_filter_dialog, null)
+        val dialogView = inflater.inflate(R.layout.row_filter_dialog, null)
         dialogBuilder.setView(dialogView)
 
         val rvItem = dialogView.findViewById(R.id.rvItem) as RecyclerView

@@ -1,8 +1,8 @@
 package com.mcit.newsfinder.ui.fragment.news
 
 import android.view.ViewGroup
-import com.dominate.talabyeh.app.core.base.BaseAdapter
 import com.mcit.newsfinder.databinding.RowFilterBinding
+import com.mcit.newsfinder.global.BaseAdapter
 import com.mcit.newsfinder.global.BaseBindingViewHolder
 import java.util.ArrayList
 

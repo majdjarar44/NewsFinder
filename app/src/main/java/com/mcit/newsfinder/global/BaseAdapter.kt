@@ -1,4 +1,4 @@
-package com.dominate.talabyeh.app.core.base
+package com.mcit.newsfinder.global
 
 import android.content.Context
 import android.view.LayoutInflater

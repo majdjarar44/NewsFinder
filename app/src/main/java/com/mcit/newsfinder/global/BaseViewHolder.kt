@@ -1,4 +1,4 @@
-package com.dominate.talabyeh.app.core.base
+package com.mcit.newsfinder.global
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

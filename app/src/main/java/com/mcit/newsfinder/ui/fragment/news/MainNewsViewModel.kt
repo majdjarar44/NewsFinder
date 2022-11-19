@@ -1,6 +1,5 @@
-package com.mcit.news
+package com.mcit.newsfinder.ui.fragment.news
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,11 +9,9 @@ import com.mcit.newsfinder.usecase.Resource
 import com.mcit.newsfinder.data.model.main.MainNews
 import com.mcit.newsfinder.data.repository.MainNewsRepository
 import com.mcit.newsfinder.data.repository.NewsDataRepository
+import com.mcit.newsfinder.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import okhttp3.Dispatcher
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -24,13 +21,14 @@ class MainNewsViewModel @Inject constructor(
     val mainNews: MainNewsRepository,
     val dataNews: NewsDataRepository
 ) : ViewModel() {
+
     val mainNewsResponse = MutableLiveData<Resource<MainNews>>()
     val dataNewsResponse = MutableLiveData<Resource<DetailsNewsResponse>>()
     val mixedNewsDataModel = MutableLiveData<ArrayList<MixedNewsDataModel>>()
     val filterResult = MutableLiveData<ArrayList<MixedNewsDataModel>>()
 
     init {
-        getMainNews(getCurrentDay())
+        getMainNews(Utils.getCurrentDay())
     }
 
     fun getMainNews(format: String) {
@@ -74,12 +72,6 @@ class MainNewsViewModel @Inject constructor(
         mixedNewsDataModel.postValue(arrayListNews)
     }
 
-    fun getCurrentDay(): String {
-        val c = Calendar.getInstance().time
-        println("Current time => $c")
-        val df = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
-        return df.format(c)
-    }
 
     fun filterByCountry(country: String) {
         var arrayListNews: ArrayList<MixedNewsDataModel> = arrayListOf()
@@ -106,3 +98,4 @@ class MainNewsViewModel @Inject constructor(
 
     }
 }
+
